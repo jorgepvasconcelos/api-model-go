@@ -8,7 +8,7 @@ import (
 
 // InitServer returns a mux.Router
 func InitServer() {
-	router := gin.Default()
+	router := gin.New()
 	router.GET("/book", endpoints.ConsultBook)
 
 	err := router.Run(":8080")
