@@ -1,17 +1,14 @@
-package tables
+package dto
 
-import (
-	"gorm.io/gorm"
-	"time"
-)
+import "time"
 
-type TblBooks struct {
-	gorm.Model
+type BookDTO struct {
+	Id          int
 	Isbn        string
 	Name        string
 	Author      string
 	Publisher   string
-	ReleaseDate time.Time
+	ReleaseDate time.Time `time_format:"01/02/06"`
 	Pages       int
 	Description string
 }

@@ -1,8 +1,9 @@
 package endpoints
 
 import (
-	bookService "api/src/services/book"
+	"api/src/services/book/bookService"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"time"
 )
@@ -29,9 +30,11 @@ func ConsultBook(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	service := bookService.BookService{}
 
-	bookValue, _ := service.FindBookById(45)
+	bookValue, err := bookService.BookService{}.FindBookById(45)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	response := ConsultBookOutput{
 		BookId:      bookValue.BookId,
