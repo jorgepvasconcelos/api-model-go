@@ -2,25 +2,32 @@ package repository
 
 import (
 	"api/src/data/dto"
-	"time"
+	"api/src/data/orm/sessions"
+	"api/src/data/orm/tables"
 )
 
 type BookRepository struct{}
 
 func (BookRepository) FindBookById(bookId int) (dto.BookDTO, error) {
-	date := time.Date(2021, 8, 15, 14, 30, 45, 100, time.Local)
-	layout := "01/02/06"
-	releaseDate, _ := time.Parse(layout, date.Format(layout))
 
+	session, _ := sessions.OpenSession()
+
+	var tblBook tables.TblBooks
+	session.First(&tblBook, "id = ?", rune(bookId))
+
+	//date := time.Date(2021, 8, 15, 14, 30, 45, 100, time.Local)
+	//layout := "01/02/06"
+	//releaseDate, _ := time.Parse(layout, date.Format(layout))
+	//
 	response := dto.BookDTO{
-		Id:          10,
-		Isbn:        "ddds",
-		Name:        "name",
-		Author:      "authott",
-		Publisher:   "nit",
-		ReleaseDate: releaseDate,
-		Pages:       5222,
-		Description: "a dest",
+		Id:          int(tblBook.ID),
+		Isbn:        tblBook.Isbn,
+		Name:        tblBook.Name,
+		Author:      tblBook.Author,
+		Publisher:   tblBook.Publisher,
+		ReleaseDate: tblBook.ReleaseDate,
+		Pages:       tblBook.Pages,
+		Description: tblBook.Description,
 	}
 
 	return response, nil

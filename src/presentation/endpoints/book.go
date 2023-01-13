@@ -9,7 +9,7 @@ import (
 )
 
 type ConsultBookInput struct {
-	BookId string `form:"book_id" binding:"required"`
+	BookId int `form:"book_id" binding:"required"`
 }
 
 type ConsultBookOutput struct {
@@ -25,13 +25,13 @@ type ConsultBookOutput struct {
 
 // ConsultBook insere um usuário no banco de dados
 func ConsultBook(c *gin.Context) {
-	var validation ConsultBookInput
-	if err := c.ShouldBindQuery(&validation); err != nil {
+	var params ConsultBookInput
+	if err := c.ShouldBindQuery(&params); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
-	bookValue, err := bookService.BookService{}.FindBookById(45)
+	bookValue, err := bookService.BookService{}.FindBookById(params.BookId)
 	if err != nil {
 		log.Fatal(err)
 	}

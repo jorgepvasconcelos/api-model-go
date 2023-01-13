@@ -7,6 +7,7 @@ import (
 
 type TblBooks struct {
 	gorm.Model
+	Id          uint
 	Isbn        string
 	Name        string
 	Author      string
