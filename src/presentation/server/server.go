@@ -6,9 +6,10 @@ import (
 	"log"
 )
 
-// InitServer returns a mux.Router
+// InitServer start the web server
 func InitServer() {
 	router := gin.New()
+	router.GET("/health_check", endpoints.HealthCheck)
 	router.GET("/book", endpoints.ConsultBook)
 
 	err := router.Run(":8080")

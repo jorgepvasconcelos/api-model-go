@@ -1,9 +1,9 @@
 package repository
 
 import (
+	"api/src/data/db_orm/sessions"
+	"api/src/data/db_orm/tables"
 	"api/src/data/dto"
-	"api/src/data/orm/sessions"
-	"api/src/data/orm/tables"
 )
 
 type BookRepository struct{}

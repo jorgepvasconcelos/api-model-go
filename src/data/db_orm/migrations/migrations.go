@@ -1,8 +1,8 @@
 package main
 
 import (
-	"api/src/data/orm"
-	"api/src/data/orm/tables"
+	"api/src/data/db_orm"
+	"api/src/data/db_orm/tables"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	db, err := gorm.Open(mysql.Open(orm.DbUrl), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(db_orm.DbUrl), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}

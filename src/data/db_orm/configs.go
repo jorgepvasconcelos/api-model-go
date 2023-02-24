@@ -1,4 +1,4 @@
-package orm
+package db_orm
 
 var (
 	dbHOST     = "127.0.0.1"
