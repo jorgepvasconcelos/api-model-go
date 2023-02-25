@@ -1,16 +1,14 @@
 package bookService
 
 import (
-	"api/src/data/repository"
+	"api/src/data/repository/bookRepository"
 	"api/src/domain"
 	"api/src/services/book/bookError"
 	"errors"
 )
 
-type BookService struct{}
-
-func (BookService) FindBookById(bookId int) (domain.Book, bookError.BookError) {
-	bookValue, err := repository.BookRepository{}.FindBookById(bookId)
+func FindBookById(bookId int) (domain.Book, bookError.BookError) {
+	bookValue, err := bookRepository.FindBookById(bookId)
 	if err != nil {
 		if errors.Is(err, bookError.NotFound) {
 			return domain.Book{}, bookError.NotFound

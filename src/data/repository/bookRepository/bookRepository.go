@@ -1,4 +1,4 @@
-package repository
+package bookRepository
 
 import (
 	"api/src/data/db_orm/sessions"
@@ -6,9 +6,7 @@ import (
 	"api/src/data/dto"
 )
 
-type BookRepository struct{}
-
-func (BookRepository) FindBookById(bookId int) (dto.BookDTO, error) {
+func FindBookById(bookId int) (dto.BookDTO, error) {
 
 	session, _ := sessions.OpenSession()
 
