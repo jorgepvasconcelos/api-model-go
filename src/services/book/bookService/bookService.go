@@ -1,6 +1,7 @@
 package bookService
 
 import (
+	"api/src/data/errors/sqlError"
 	"api/src/data/repository/bookRepository"
 	"api/src/domain"
 	"api/src/services/book/bookError"
@@ -10,7 +11,7 @@ import (
 func FindBookById(bookId int) (domain.Book, bookError.BookError) {
 	bookValue, err := bookRepository.FindBookById(bookId)
 	if err != nil {
-		if errors.Is(err, bookError.NotFound) {
+		if errors.Is(err, sqlError.NotFound) {
 			return domain.Book{}, bookError.NotFound
 		}
 	}

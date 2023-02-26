@@ -4,19 +4,21 @@ import (
 	"api/src/data/db_orm/sessions"
 	"api/src/data/db_orm/tables"
 	"api/src/data/dto"
+	"api/src/data/errors/sqlError"
+	"errors"
+	"gorm.io/gorm"
 )
 
-func FindBookById(bookId int) (dto.BookDTO, error) {
-
+func FindBookById(bookId int) (dto.BookDTO, sqlError.SqlError) {
 	session, _ := sessions.OpenSession()
 
 	var tblBook tables.TblBooks
-	session.First(&tblBook, "id = ?", rune(bookId))
+	result := session.First(&tblBook, "id = ?", rune(bookId))
 
-	//date := time.Date(2021, 8, 15, 14, 30, 45, 100, time.Local)
-	//layout := "01/02/06"
-	//releaseDate, _ := time.Parse(layout, date.Format(layout))
-	//
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return dto.BookDTO{}, sqlError.NotFound
+	}
+
 	response := dto.BookDTO{
 		Id:          int(tblBook.ID),
 		Isbn:        tblBook.Isbn,

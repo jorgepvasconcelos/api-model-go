@@ -2,9 +2,10 @@ package endpoints
 
 import (
 	"api/src/presentation/schemas"
+	"api/src/services/book/bookError"
 	"api/src/services/book/bookService"
+	"errors"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
@@ -18,7 +19,11 @@ func ConsultBook(c *gin.Context) {
 
 	bookValue, err := bookService.FindBookById(params.BookId)
 	if err != nil {
-		log.Fatal(err)
+		if errors.Is(err, bookError.NotFound) {
+			c.SecureJSON(http.StatusNotFound, map[string]string{
+				"message": "not foud"})
+			return
+		}
 	}
 
 	response := schemas.ConsultBookOutput{
