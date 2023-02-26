@@ -6,6 +6,7 @@ import (
 	"api/src/data/dto"
 	"api/src/data/errors/sqlError"
 	"api/src/data/redisClient"
+	"api/src/data/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -44,13 +45,8 @@ func FindBookById(bookId int) (dto.BookDTO, sqlError.SqlError) {
 		Description: tblBook.Description,
 	}
 
-	serializedResponse, err := json.Marshal(response)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = client.Set(redisClient.Ctx, cacheKey, serializedResponse, redis.KeepTTL).Err()
-	if err != nil {
+	serializedResponse := utils.SerializeToJson(response)
+	if err := client.Set(redisClient.Ctx, cacheKey, serializedResponse, redis.KeepTTL).Err(); err != nil {
 		log.Fatal(err)
 	}
 
