@@ -20,8 +20,7 @@ func ConsultBook(c *gin.Context) {
 	bookValue, err := bookService.FindBookById(params.BookId)
 	if err != nil {
 		if errors.Is(err, bookError.NotFound) {
-			c.SecureJSON(http.StatusNotFound, map[string]string{
-				"message": "not foud"})
+			c.SecureJSON(http.StatusNotFound, schemas.Message{Message: "Book not found"})
 			return
 		}
 	}
